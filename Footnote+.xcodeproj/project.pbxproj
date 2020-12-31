@@ -13,12 +13,20 @@
 		FC217B3B2598682800C604EE /* Footnote_.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FC217B0E2598682600C604EE /* Footnote_.xcdatamodeld */; };
 		FC217B3C2598682800C604EE /* Footnote_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC217B102598682600C604EE /* Footnote_App.swift */; };
 		FC217B3D2598682800C604EE /* Footnote_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC217B102598682600C604EE /* Footnote_App.swift */; };
-		FC217B3E2598682800C604EE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC217B112598682600C604EE /* ContentView.swift */; };
-		FC217B3F2598682800C604EE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC217B112598682600C604EE /* ContentView.swift */; };
+		FC217B3E2598682800C604EE /* BookList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC217B112598682600C604EE /* BookList.swift */; };
+		FC217B3F2598682800C604EE /* BookList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC217B112598682600C604EE /* BookList.swift */; };
 		FC217B402598682800C604EE /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC217B122598682600C604EE /* Persistence.swift */; };
 		FC217B412598682800C604EE /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC217B122598682600C604EE /* Persistence.swift */; };
 		FC217B422598682800C604EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC217B132598682800C604EE /* Assets.xcassets */; };
 		FC217B432598682800C604EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC217B132598682800C604EE /* Assets.xcassets */; };
+		FC217B5B25986A1500C604EE /* BookDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC217B5A25986A1500C604EE /* BookDetailView.swift */; };
+		FC217B5C25986A1500C604EE /* BookDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC217B5A25986A1500C604EE /* BookDetailView.swift */; };
+		FC35022925996388008D1516 /* FootnoteCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC35022825996388008D1516 /* FootnoteCommands.swift */; };
+		FC35022A25996388008D1516 /* FootnoteCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC35022825996388008D1516 /* FootnoteCommands.swift */; };
+		FC9C1CA5259D8F3E00FF5CB1 /* BookItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9C1CA4259D8F3E00FF5CB1 /* BookItemView.swift */; };
+		FC9C1CA6259D8F3E00FF5CB1 /* BookItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9C1CA4259D8F3E00FF5CB1 /* BookItemView.swift */; };
+		FC9C1CB0259D92A700FF5CB1 /* Cosmetics.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9C1CAF259D92A700FF5CB1 /* Cosmetics.swift */; };
+		FC9C1CB1259D92A700FF5CB1 /* Cosmetics.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9C1CAF259D92A700FF5CB1 /* Cosmetics.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,7 +49,7 @@
 /* Begin PBXFileReference section */
 		FC217B0F2598682600C604EE /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		FC217B102598682600C604EE /* Footnote_App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Footnote_App.swift; sourceTree = "<group>"; };
-		FC217B112598682600C604EE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		FC217B112598682600C604EE /* BookList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookList.swift; sourceTree = "<group>"; };
 		FC217B122598682600C604EE /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		FC217B132598682800C604EE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FC217B182598682800C604EE /* Footnote+.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Footnote+.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -55,6 +63,10 @@
 		FC217B332598682800C604EE /* Tests macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC217B372598682800C604EE /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		FC217B392598682800C604EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FC217B5A25986A1500C604EE /* BookDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailView.swift; sourceTree = "<group>"; };
+		FC35022825996388008D1516 /* FootnoteCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootnoteCommands.swift; sourceTree = "<group>"; };
+		FC9C1CA4259D8F3E00FF5CB1 /* BookItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookItemView.swift; sourceTree = "<group>"; };
+		FC9C1CAF259D92A700FF5CB1 /* Cosmetics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cosmetics.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,8 +117,12 @@
 			isa = PBXGroup;
 			children = (
 				FC217B102598682600C604EE /* Footnote_App.swift */,
-				FC217B112598682600C604EE /* ContentView.swift */,
+				FC217B112598682600C604EE /* BookList.swift */,
+				FC217B5A25986A1500C604EE /* BookDetailView.swift */,
 				FC217B122598682600C604EE /* Persistence.swift */,
+				FC35022825996388008D1516 /* FootnoteCommands.swift */,
+				FC9C1CA4259D8F3E00FF5CB1 /* BookItemView.swift */,
+				FC9C1CAF259D92A700FF5CB1 /* Cosmetics.swift */,
 				FC217B132598682800C604EE /* Assets.xcassets */,
 				FC217B0E2598682600C604EE /* Footnote_.xcdatamodeld */,
 			);
@@ -317,9 +333,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC217B3A2598682800C604EE /* Footnote_.xcdatamodeld in Sources */,
+				FC9C1CA5259D8F3E00FF5CB1 /* BookItemView.swift in Sources */,
+				FC35022925996388008D1516 /* FootnoteCommands.swift in Sources */,
 				FC217B402598682800C604EE /* Persistence.swift in Sources */,
+				FC217B5B25986A1500C604EE /* BookDetailView.swift in Sources */,
+				FC9C1CB0259D92A700FF5CB1 /* Cosmetics.swift in Sources */,
 				FC217B3C2598682800C604EE /* Footnote_App.swift in Sources */,
-				FC217B3E2598682800C604EE /* ContentView.swift in Sources */,
+				FC217B3E2598682800C604EE /* BookList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,9 +348,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC217B3B2598682800C604EE /* Footnote_.xcdatamodeld in Sources */,
+				FC9C1CA6259D8F3E00FF5CB1 /* BookItemView.swift in Sources */,
+				FC35022A25996388008D1516 /* FootnoteCommands.swift in Sources */,
 				FC217B412598682800C604EE /* Persistence.swift in Sources */,
+				FC217B5C25986A1500C604EE /* BookDetailView.swift in Sources */,
+				FC9C1CB1259D92A700FF5CB1 /* Cosmetics.swift in Sources */,
 				FC217B3D2598682800C604EE /* Footnote_App.swift in Sources */,
-				FC217B3F2598682800C604EE /* ContentView.swift in Sources */,
+				FC217B3F2598682800C604EE /* BookList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

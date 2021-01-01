@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct BookDetailView: View {
+    
+    @Environment(\.managedObjectContext) private var viewContext
     @Binding var selectedBook: Book?
     
     @State var title: String
@@ -43,52 +45,18 @@ struct BookDetailView: View {
                     Spacer()
                 }
                 .frame(width: geometry.size.width / 2)
-                
-                VStack {
-                    HStack {
-                        Text("Quote List").font(.title)
-                        Spacer()
-                        
-                        Button(action: {
-                            print("New Quote")
-                        }) {
-                            Image(systemName: "plus")
-                                .foregroundColor(.footnoteRed)
-                        }
-                    }
-                    Spacer()
-                }
+                Divider()
+                QuoteListView(selectedBook: $selectedBook)
                 Spacer()
                 
             }.padding()
         }
         
     }
+    
 }
 
-enum BookState: Int16, CaseIterable {
-    case wishlist = 0
-    case purchased 
-    case inProgress
-    case completed
-    
-    var stringValue: String {
-        switch self {
-        case .wishlist:
-            return "Wishlist"
-        case .purchased:
-            return "Purchased"
-        case .inProgress:
-            return "In Progress"
-        case .completed:
-            return "Completed"
-        }
-    }
-    
-    func rawCoreDataValue() -> Int16 {
-        Int16(self.rawValue)
-    }
-}
+
 
 struct BookDetailView_Previews: PreviewProvider {
     static let moc = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
@@ -99,3 +67,5 @@ struct BookDetailView_Previews: PreviewProvider {
         return BookDetailView(selectedBook: .constant(book), title: book.title!, status: BookState(rawValue: 0)!)
     }
 }
+
+

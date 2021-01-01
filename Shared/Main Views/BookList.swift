@@ -21,19 +21,18 @@ struct BookList: View {
     var body: some View {
         
         NavigationView {
-            
             List(selection: $selectedBook) {
                 ForEach(books) { book in
-                    NavigationLink(destination: BookDetailView(selectedBook: $selectedBook, title: selectedBook?.title ?? "Title", status: (BookState(rawValue: Int16(book.status))!)), tag: book, selection: $selectedBook) {
-                        BookItemView(book: book)
-                        
+                    VStack {
+                        NavigationLink(destination: BookDetailView(selectedBook: $selectedBook, title: selectedBook?.title ?? "Title", status: (BookState(rawValue: Int16(book.status))!)), tag: book, selection: $selectedBook) {
+                            BookItemView(book: book)
+                            
+                        }
                     }
                 }
                 .onDelete(perform: deleteItems)
-                
             }
             .listStyle(SidebarListStyle())
-            
         } 
     }
     
@@ -52,8 +51,6 @@ struct BookList: View {
             }
         }
     }
-    
-    
 }
 
 private let itemFormatter: DateFormatter = {

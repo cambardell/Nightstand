@@ -9,6 +9,7 @@ import SwiftUI
 
 struct BookItemView: View {
     var book: Book
+    
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
@@ -17,7 +18,6 @@ struct BookItemView: View {
             }
             Spacer()
         }.padding(5)
-        
     }
 }
 

@@ -9,7 +9,8 @@ import SwiftUI
 
 struct QuoteListView: View {
     
-    @Binding var selectedBook: Book?
+    var bookQuotes: [Quote]
+    var book: Book
     @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
@@ -26,7 +27,7 @@ struct QuoteListView: View {
                 }
             }
             VStack {
-                ForEach(selectedBook?.quoteArray ?? [], id: \.self) { quote in
+                ForEach(bookQuotes, id: \.self) { quote in
                     Text(quote.text ?? "text")
                 }
             }
@@ -38,7 +39,7 @@ struct QuoteListView: View {
         withAnimation {
             let newItem = Quote(context: viewContext)
             newItem.dateCreated = Date()
-            newItem.book = selectedBook
+            newItem.book = book
             
             do {
                 try viewContext.save()
@@ -59,6 +60,6 @@ struct QuoteListView_Previews: PreviewProvider {
         let book = Book(context: moc)
         book.title = "Title"
         book.dateCreated = Date()
-        return QuoteListView(selectedBook: .constant(book))
+        return QuoteListView(bookQuotes: book.quoteArray, book: book)
     }
 }

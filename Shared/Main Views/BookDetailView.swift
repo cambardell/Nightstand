@@ -45,8 +45,14 @@ struct BookDetailView: View {
                     Spacer()
                 }
                 .frame(width: geometry.size.width / 2)
+                
                 Divider()
-                QuoteListView(selectedBook: $selectedBook)
+                
+                if let book = selectedBook {
+                    QuoteListView(bookQuotes: book.quoteArray, book: book)
+                }
+                
+                
                 Spacer()
                 
             }.padding()

@@ -17,7 +17,6 @@ struct Footnote_App: App {
             BookList(selectedBook: $selectedBook)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 
-                
         }.commands {
             FootnoteCommands()
             CommandGroup(replacing: CommandGroupPlacement.pasteboard) {

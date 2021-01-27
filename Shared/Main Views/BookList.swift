@@ -34,7 +34,7 @@ struct BookList: View {
                 }
                 .onDelete(perform: deleteItems)
             }
-            .listStyle(PlainListStyle())
+            .listStyle(DefaultListStyle())
             .toolbar {
                 HStack {
                     #if os(iOS)

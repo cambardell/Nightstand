@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct BookItemView: View {
     var book: Book

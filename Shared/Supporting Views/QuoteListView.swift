@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct QuoteListView: View {
     
@@ -17,13 +18,15 @@ struct QuoteListView: View {
         VStack {
             HStack {
                 Text("Quote List").font(.title)
+                    .padding(.leading)
+
                 Spacer()
                 
                 Button(action: {
                     AddQuote()
                 }) {
                     Image(systemName: "plus")
-                        .foregroundColor(.footnoteRed)
+                        .foregroundColor(Color("footnoteRed"))
                 }
             }
             VStack {

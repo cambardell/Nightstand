@@ -16,15 +16,7 @@ struct Footnote_App: App {
         WindowGroup {
             BookList(selectedBook: $selectedBook)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                .toolbar {
-                    #if os(iOS)
-                    EditButton()
-                    #endif
-                    
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
+                
                 
         }.commands {
             FootnoteCommands()
@@ -51,6 +43,24 @@ struct Footnote_App: App {
             }
         }
     }
+
+    private func addItem() {
+        withAnimation {
+            let newItem = Book(context: persistenceController.container.viewContext)
+            newItem.dateCreated = Date()
+            newItem.id = UUID()
+
+
+            do {
+                try persistenceController.container.viewContext.save()
+            } catch {
+                // Replace this implementation with code to handle the error appropriately.
+                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                let nsError = error as NSError
+                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+            }
+        }
+    }
     
     private func deleteItem(book: Book) {
         withAnimation {
@@ -68,23 +78,7 @@ struct Footnote_App: App {
         }
     }
     
-    private func addItem() {
-        withAnimation {
-            let newItem = Book(context: persistenceController.container.viewContext)
-            newItem.dateCreated = Date()
-            newItem.id = UUID()
     
-            
-            do {
-                try persistenceController.container.viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
     
     
 }

@@ -25,12 +25,6 @@ extension Color {
         )
     }
 
-    // Palette 1
-
-    static let footnoteOrange = Color(NSColor(red: 0.97, green: 0.62, blue: 0.00, alpha: 1.00))
-    static let footnoteRed = Color(NSColor(red: 0.61, green: 0.12, blue: 0.10, alpha: 1.00))
-    static let footnoteLightRed = Color(NSColor(red: 0.66, green: 0.13, blue: 0.10, alpha: 1.00))
-
 }
 
 

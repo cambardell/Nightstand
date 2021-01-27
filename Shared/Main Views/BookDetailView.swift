@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct BookDetailView: View {
     
@@ -70,7 +71,10 @@ struct BookDetailView_Previews: PreviewProvider {
         let book = Book(context: moc)
         book.title = "Title"
         book.dateCreated = Date()
-        return BookDetailView(selectedBook: .constant(book), title: book.title!, status: BookState(rawValue: 0)!)
+        return Group {
+            BookDetailView(selectedBook: .constant(book), title: book.title!, status: BookState(rawValue: 0)!)
+            BookDetailView(selectedBook: .constant(book), title: book.title!, status: BookState(rawValue: 0)!)
+        }
     }
 }
 

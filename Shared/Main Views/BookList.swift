@@ -9,6 +9,8 @@ import SwiftUI
 import CoreData
 
 struct BookList: View {
+    let persistenceController = PersistenceController.shared
+    
     @Environment(\.managedObjectContext) private var viewContext
     
     @Binding var selectedBook: Book?
@@ -32,8 +34,21 @@ struct BookList: View {
                 }
                 .onDelete(perform: deleteItems)
             }
-            .listStyle(SidebarListStyle())
-        } 
+            .listStyle(PlainListStyle())
+            .toolbar {
+                HStack {
+                    #if os(iOS)
+                    EditButton()
+                    #endif
+
+                    Button(action: addItem) {
+                        Label("Add Item", systemImage: "plus")
+                    }
+                }
+
+            }
+        }
+
     }
     
     private func deleteItems(offsets: IndexSet) {
@@ -43,6 +58,24 @@ struct BookList: View {
             
             do {
                 try viewContext.save()
+            } catch {
+                // Replace this implementation with code to handle the error appropriately.
+                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                let nsError = error as NSError
+                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+            }
+        }
+    }
+
+    private func addItem() {
+        withAnimation {
+            let newItem = Book(context: persistenceController.container.viewContext)
+            newItem.dateCreated = Date()
+            newItem.id = UUID()
+
+
+            do {
+                try persistenceController.container.viewContext.save()
             } catch {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.

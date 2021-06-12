@@ -14,8 +14,8 @@ struct BookItemView: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(book.title ?? "Title").font(.title)
-                Text("by Author").font(.headline)
+                Text(book.title ?? "Title")
+                Text("by Author").font(.callout)
             }
             Spacer()
         }.padding(5)

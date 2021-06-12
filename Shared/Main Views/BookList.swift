@@ -14,6 +14,7 @@ struct BookList: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @Binding var selectedBook: Book?
+    @State var searchText = ""
     
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Book.dateCreated, ascending: false)],
@@ -21,41 +22,44 @@ struct BookList: View {
     private var books: FetchedResults<Book>
     
     var body: some View {
-        
 
         NavigationView {
             VStack {
-                List(selection: $selectedBook) {
-                    ForEach(books) { book in
-                        VStack {
-                            NavigationLink(destination: BookDetailView(selectedBook: $selectedBook, title: selectedBook?.title ?? "Title", status: (BookState(rawValue: Int16(book.status))!)), tag: book, selection: $selectedBook) {
-                                BookItemView(book: book)
+                List(books, selection: $selectedBook) { book in
+                    NavigationLink(destination: BookDetailView(selectedBook: $selectedBook, title: selectedBook?.title ?? "Title", status: (BookState(rawValue: Int16(book.status))!)), tag: book, selection: $selectedBook) {
+                        BookItemView(book: book)
 
-                            }
+
+                    }.swipeActions {
+                        Button(role: .destructive) {
+                            deleteItem(books: [book])
+                        } label: {
+                            Label("Delete", systemImage: "xmark.bin")
                         }
                     }
-                    .onDelete(perform: deleteItems)
+
                 }
-                .listStyle(DefaultListStyle())
+                .searchable(text: $searchText)
 
                 Button(action: addItem) {
-                    Label("Add Item", systemImage: "plus")
+                    Label("Add Book", systemImage: "plus")
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.large)
                 .controlProminence(.increased)
-                .padding(.horizontal)
-            }
+                .padding()
+                .background(.thinMaterial)
+            }.navigationTitle("Books")
+                .ignoresSafeArea()
 
         }
 
     }
     
-    private func deleteItems(offsets: IndexSet) {
-        print(offsets)
+    private func deleteItem(books: [Book]) {
         withAnimation {
-            offsets.map { books[$0] }.forEach(viewContext.delete)
+            books.forEach(viewContext.delete)
             
             do {
                 try viewContext.save()
@@ -100,6 +104,6 @@ struct ContentView_Previews: PreviewProvider {
         let book = Book(context: moc)
         book.title = "Title"
         book.dateCreated = Date()
-        return BookList(selectedBook: .constant(book)).environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+        return BookList(selectedBook: .constant(book)).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

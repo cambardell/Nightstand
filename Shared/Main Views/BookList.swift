@@ -22,31 +22,32 @@ struct BookList: View {
     
     var body: some View {
         
+
         NavigationView {
-            List(selection: $selectedBook) {
-                ForEach(books) { book in
-                    VStack {
-                        NavigationLink(destination: BookDetailView(selectedBook: $selectedBook, title: selectedBook?.title ?? "Title", status: (BookState(rawValue: Int16(book.status))!)), tag: book, selection: $selectedBook) {
-                            BookItemView(book: book)
-                            
+            VStack {
+                List(selection: $selectedBook) {
+                    ForEach(books) { book in
+                        VStack {
+                            NavigationLink(destination: BookDetailView(selectedBook: $selectedBook, title: selectedBook?.title ?? "Title", status: (BookState(rawValue: Int16(book.status))!)), tag: book, selection: $selectedBook) {
+                                BookItemView(book: book)
+
+                            }
                         }
                     }
+                    .onDelete(perform: deleteItems)
                 }
-                .onDelete(perform: deleteItems)
-            }
-            .listStyle(DefaultListStyle())
-            .toolbar {
-                HStack {
-                    #if os(iOS)
-                    EditButton()
-                    #endif
+                .listStyle(DefaultListStyle())
 
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
+                Button(action: addItem) {
+                    Label("Add Item", systemImage: "plus")
+                        .frame(maxWidth: .infinity)
                 }
-
+                .buttonStyle(.bordered)
+                .controlSize(.large)
+                .controlProminence(.increased)
+                .padding(.horizontal)
             }
+
         }
 
     }
@@ -72,7 +73,7 @@ struct BookList: View {
             let newItem = Book(context: persistenceController.container.viewContext)
             newItem.dateCreated = Date()
             newItem.id = UUID()
-
+            
 
             do {
                 try persistenceController.container.viewContext.save()

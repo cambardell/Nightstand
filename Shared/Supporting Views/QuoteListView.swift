@@ -16,25 +16,18 @@ struct QuoteListView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Text("Quote List").font(.title)
-                    .padding(.leading)
-
-                Spacer()
-                
-                Button(action: {
-                    AddQuote()
-                }) {
-                    Image(systemName: "plus")
-                        .foregroundColor(Color("footnoteRed"))
-                }
+            List(bookQuotes, id: \.self) { quote in
+                Text(quote.text ?? "text")
             }
-            VStack {
-                ForEach(bookQuotes, id: \.self) { quote in
-                    Text(quote.text ?? "text")
-                }
-            }
+            
             Spacer()
+
+            Button(action: AddQuote) {
+                Text("Add Quote")
+            }
+            .buttonStyle(.bordered)
+            .controlSize(.regular)
+            .padding(.horizontal)
         }
     }
     

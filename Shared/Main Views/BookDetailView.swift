@@ -18,48 +18,36 @@ struct BookDetailView: View {
     @State var status: BookState
     
     var body: some View {
-        
-        GeometryReader { geometry in
-            HStack {
-                VStack(alignment: .leading) {
+
+
+            Form {
+                Section {
                     TextField("Title", text: $title)
                         .textFieldStyle(PlainTextFieldStyle())
-                        .font(.largeTitle)
-                        
-                    
+                        .font(.title2)
+
+
                     TextField("Author", text: $author)
-                        .font(.title)
+                        .font(.title3)
                         .textFieldStyle(PlainTextFieldStyle())
-                    
+
                     Picker(selection:
-                            $status, label: Text("Status")) {
+                            $status, label: Text(status.stringValue)) {
                         ForEach(BookState.allCases, id: \.rawValue) { type in
                             Text(type.stringValue)
                                 .tag(type)
                         }
-                    }.pickerStyle(DefaultPickerStyle())
-                    .frame(width: 150)
-                    
-                    Text("Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
-                        
-                    
-                    Spacer()
+                    }.pickerStyle(.menu)
                 }
-                .frame(width: geometry.size.width / 2)
-                
-                Divider()
-                
-                if let book = selectedBook {
-                    QuoteListView(bookQuotes: book.quoteArray, book: book)
+                Section(header: Text("Quotes")) {
+                    if let book = selectedBook {
+                        QuoteListView(bookQuotes: book.quoteArray, book: book)
+                    }
                 }
                 
-                
-                Spacer()
-                
-            }.padding()
+            }
+
         }
-        
-    }
     
 }
 
@@ -72,7 +60,6 @@ struct BookDetailView_Previews: PreviewProvider {
         book.title = "Title"
         book.dateCreated = Date()
         return Group {
-            BookDetailView(selectedBook: .constant(book), title: book.title!, status: BookState(rawValue: 0)!)
             BookDetailView(selectedBook: .constant(book), title: book.title!, status: BookState(rawValue: 0)!)
         }
     }

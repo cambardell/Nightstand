@@ -15,11 +15,11 @@ struct PersistenceController {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
         
-        for _ in 0..<10 {
+        for i in 0..<10 {
             let newItem = Book(context: viewContext)
             newItem.title = "Title"
             newItem.dateCreated = Date()
-            
+            newItem.status = Int16(Double(i)/2.5)
         }
         do {
             try viewContext.save()

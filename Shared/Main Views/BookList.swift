@@ -15,45 +15,57 @@ struct BookList: View {
     
     @Binding var selectedBook: Book?
     @State var searchText = ""
-    
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Book.dateCreated, ascending: false)],
-        animation: .default)
-    private var books: FetchedResults<Book>
+
+    @SectionedFetchRequest<Int16, Book>(
+        sectionIdentifier: \.status,
+        sortDescriptors: [NSSortDescriptor(keyPath: \Book.dateCreated, ascending: true)],
+        animation: .default
+    )
+    private var sectionedBooks
     
     var body: some View {
 
         NavigationView {
             VStack {
-                List(books, selection: $selectedBook) { book in
-                    NavigationLink(destination: BookDetailView(selectedBook: $selectedBook, title: selectedBook?.title ?? "Title", status: (BookState(rawValue: Int16(book.status))!)), tag: book, selection: $selectedBook) {
-                        BookItemView(book: book)
+                List {
+                    ForEach(sectionedBooks) { section in
+                        Section(header: Text(BookState(rawValue: section.id)?.stringValue ?? "test")) {
+                            ForEach(section) { book in
+                                NavigationLink {
+                                    Text(book.title ?? "Title")
+                                } label: {
+                                    BookItemView(book: book)
+                                }
+                                .swipeActions {
+                                    Button(role: .destructive) {
+                                        deleteItem(books: [book])
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
+                                }
 
-
-                    }.swipeActions {
-                        Button(role: .destructive) {
-                            deleteItem(books: [book])
-                        } label: {
-                            Label("Delete", systemImage: "xmark.bin")
+                            }
                         }
                     }
-
                 }
                 .searchable(text: $searchText)
 
-                Button(action: addItem) {
-                    Label("Add Book", systemImage: "plus")
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.bordered)
-                .controlSize(.large)
-                .controlProminence(.increased)
-                .padding()
-                .background(.thinMaterial)
             }.navigationTitle("Books")
                 .ignoresSafeArea()
 
         }
+        .safeAreaInset(edge: .bottom) {
+            Button(action: addItem) {
+                Label("Add Book", systemImage: "plus")
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.bordered)
+            .controlSize(.large)
+            .tint(.accentColor)
+            .padding()
+            .background(.thinMaterial)
+        }
+
 
     }
     
@@ -104,6 +116,6 @@ struct ContentView_Previews: PreviewProvider {
         let book = Book(context: moc)
         book.title = "Title"
         book.dateCreated = Date()
-        return BookList(selectedBook: .constant(book)).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        return BookList(selectedBook: .constant(book)).preferredColorScheme(.dark).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

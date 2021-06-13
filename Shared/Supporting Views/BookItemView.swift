@@ -13,6 +13,8 @@ struct BookItemView: View {
     
     var body: some View {
         HStack {
+            RoundedRectangle(cornerRadius: 5.0).frame(width: 30)
+                .foregroundColor(Color(UIColor.random()))
             VStack(alignment: .leading) {
                 Text(book.title ?? "Title")
                 Text("by Author").font(.callout)

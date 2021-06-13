@@ -7,7 +7,9 @@
 
 import Foundation
 
-public enum BookState: Int16, CaseIterable {
+public enum BookState: Int16, CaseIterable, Identifiable {
+
+    public var id: Self { self }
     case wishlist = 0
     case purchased
     case inProgress

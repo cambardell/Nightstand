@@ -15,6 +15,7 @@ struct BookList: View {
     
     @Binding var selectedBook: Book?
     @State var searchText = ""
+    @State var showAddBook = false
 
     @SectionedFetchRequest<Int16, Book>(
         sectionIdentifier: \.status,
@@ -47,6 +48,7 @@ struct BookList: View {
                             }
                         }
                     }
+                    
                 }
                 .searchable(text: $searchText)
 
@@ -55,7 +57,9 @@ struct BookList: View {
 
         }
         .safeAreaInset(edge: .bottom) {
-            Button(action: addItem) {
+            Button(action: {
+                showAddBook.toggle()
+            }) {
                 Label("Add Book", systemImage: "plus")
                     .frame(maxWidth: .infinity)
             }
@@ -64,6 +68,10 @@ struct BookList: View {
             .tint(.accentColor)
             .padding()
             .background(.thinMaterial)
+        }
+        .sheet(isPresented: $showAddBook) {
+            AddBookView(showAddBook: $showAddBook)
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
 
 
@@ -84,23 +92,6 @@ struct BookList: View {
         }
     }
 
-    private func addItem() {
-        withAnimation {
-            let newItem = Book(context: persistenceController.container.viewContext)
-            newItem.dateCreated = Date()
-            newItem.id = UUID()
-            
-
-            do {
-                try persistenceController.container.viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
 }
 
 private let itemFormatter: DateFormatter = {

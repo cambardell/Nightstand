@@ -35,6 +35,10 @@
 		FC9C1CA6259D8F3E00FF5CB1 /* BookItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9C1CA4259D8F3E00FF5CB1 /* BookItemView.swift */; };
 		FC9C1CB0259D92A700FF5CB1 /* Cosmetics.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9C1CAF259D92A700FF5CB1 /* Cosmetics.swift */; };
 		FC9C1CB1259D92A700FF5CB1 /* Cosmetics.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9C1CAF259D92A700FF5CB1 /* Cosmetics.swift */; };
+		FCD8324F2675C81900C903A0 /* BookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8324E2675C81900C903A0 /* BookViewModel.swift */; };
+		FCD832502675C81900C903A0 /* BookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8324E2675C81900C903A0 /* BookViewModel.swift */; };
+		FCD832522675C8E400C903A0 /* AddBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD832512675C8E400C903A0 /* AddBookView.swift */; };
+		FCD832532675C8E400C903A0 /* AddBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD832512675C8E400C903A0 /* AddBookView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +83,8 @@
 		FC35022825996388008D1516 /* FootnoteCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootnoteCommands.swift; sourceTree = "<group>"; };
 		FC9C1CA4259D8F3E00FF5CB1 /* BookItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookItemView.swift; sourceTree = "<group>"; };
 		FC9C1CAF259D92A700FF5CB1 /* Cosmetics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cosmetics.swift; sourceTree = "<group>"; };
+		FCD8324E2675C81900C903A0 /* BookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewModel.swift; sourceTree = "<group>"; };
+		FCD832512675C8E400C903A0 /* AddBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBookView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +125,7 @@
 				FC217B102598682600C604EE /* Footnote_App.swift */,
 				FC217B112598682600C604EE /* BookList.swift */,
 				FC217B5A25986A1500C604EE /* BookDetailView.swift */,
+				FCD832512675C8E400C903A0 /* AddBookView.swift */,
 			);
 			path = "Main Views";
 			sourceTree = "<group>";
@@ -141,6 +148,7 @@
 				FC35022825996388008D1516 /* FootnoteCommands.swift */,
 				FC09D6D0259E6ED900B2347B /* BookState.swift */,
 				FC9C1CAF259D92A700FF5CB1 /* Cosmetics.swift */,
+				FCD8324E2675C81900C903A0 /* BookViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -372,12 +380,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FCD8324F2675C81900C903A0 /* BookViewModel.swift in Sources */,
 				FC09D6EB259E71FA00B2347B /* Book+CoreDataClass.swift in Sources */,
 				FC09D6ED259E71FA00B2347B /* Book+CoreDataProperties.swift in Sources */,
 				FC217B3A2598682800C604EE /* Footnote_.xcdatamodeld in Sources */,
 				FC9C1CA5259D8F3E00FF5CB1 /* BookItemView.swift in Sources */,
 				FC35022925996388008D1516 /* FootnoteCommands.swift in Sources */,
 				FC217B402598682800C604EE /* Persistence.swift in Sources */,
+				FCD832522675C8E400C903A0 /* AddBookView.swift in Sources */,
 				FC217B5B25986A1500C604EE /* BookDetailView.swift in Sources */,
 				FC9C1CB0259D92A700FF5CB1 /* Cosmetics.swift in Sources */,
 				FC217B3C2598682800C604EE /* Footnote_App.swift in Sources */,
@@ -391,12 +401,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FCD832502675C81900C903A0 /* BookViewModel.swift in Sources */,
 				FC09D6EC259E71FA00B2347B /* Book+CoreDataClass.swift in Sources */,
 				FC09D6EE259E71FA00B2347B /* Book+CoreDataProperties.swift in Sources */,
 				FC217B3B2598682800C604EE /* Footnote_.xcdatamodeld in Sources */,
 				FC9C1CA6259D8F3E00FF5CB1 /* BookItemView.swift in Sources */,
 				FC35022A25996388008D1516 /* FootnoteCommands.swift in Sources */,
 				FC217B412598682800C604EE /* Persistence.swift in Sources */,
+				FCD832532675C8E400C903A0 /* AddBookView.swift in Sources */,
 				FC217B5C25986A1500C604EE /* BookDetailView.swift in Sources */,
 				FC9C1CB1259D92A700FF5CB1 /* Cosmetics.swift in Sources */,
 				FC217B3D2598682800C604EE /* Footnote_App.swift in Sources */,

@@ -17,7 +17,7 @@ extension Book {
     }
 
     @NSManaged public var dateCreated: Date?
-    @NSManaged public var id: UUID?
+    @NSManaged public var id: UUID
     @NSManaged public var title: String?
     @NSManaged public var author: String?
     @NSManaged public var status: Int16

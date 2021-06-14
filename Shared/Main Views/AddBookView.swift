@@ -15,9 +15,12 @@ struct AddBookView: View {
 
     @ObservedObject var bookViewModel = BookViewModel(nil)
     @Binding var showAddBook: Bool
+
+    @State private var bgColor = Color.red
     
     var body: some View {
         NavigationView {
+
             Form {
                 TextField("Title", text: $bookViewModel.title)
                 TextField("Author", text: $bookViewModel.author)
@@ -29,20 +32,23 @@ struct AddBookView: View {
                 }
                 .pickerStyle(.automatic)
 
-                Section {
-                    Button(action: saveBook) {
-                        Label("Save", systemImage: "book.fill")
-                            .frame(maxWidth: .infinity)
-                    }
-                    
-                    .tint(.accentColor)
-
-                }
-
+                ColorPicker("Color", selection: $bgColor, supportsOpacity: false)
 
             }
             .navigationTitle("Add a new book")
+
+
         }
+        .safeAreaInset(edge: .bottom, content: {
+            Button(action: saveBook) {
+                Label("Save", systemImage: "book.fill")
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.bordered)
+            .controlSize(.large)
+            .padding()
+            .tint(.accentColor)
+        })
 
     }
 

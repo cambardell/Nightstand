@@ -12,7 +12,7 @@ import SwiftUI
 
 class BookViewModel: ObservableObject, Equatable {
     static func == (lhs: BookViewModel, rhs: BookViewModel) -> Bool {
-        lhs.id == rhs.id
+        return (lhs.id == rhs.id) && (lhs.title == rhs.title) && (lhs.author == rhs.author) && (lhs.status == rhs.status)
     }
 
     @Published var title = ""

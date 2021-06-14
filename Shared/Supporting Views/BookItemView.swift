@@ -17,7 +17,7 @@ struct BookItemView: View {
                 .foregroundColor(Color(UIColor.random()))
             VStack(alignment: .leading) {
                 Text(book.title ?? "Title")
-                Text("by Author").font(.callout)
+                Text(book.author ?? "Author").font(.callout)
             }
             Spacer()
         }.padding(5)

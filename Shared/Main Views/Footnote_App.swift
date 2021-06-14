@@ -10,38 +10,13 @@ import SwiftUI
 @main
 struct Footnote_App: App {
     let persistenceController = PersistenceController.shared
-    @State var selectedBook: Book?
 
     var body: some Scene {
         WindowGroup {
-            BookList(selectedBook: $selectedBook)
+            BookList()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 
-        }.commands {
-            FootnoteCommands()
-            CommandGroup(replacing: CommandGroupPlacement.pasteboard) {
-                Button(action: {
-                    if let book = selectedBook {
-                        deleteItem(book: book)
-                    } else {
-                        print("No book")
-                    }
-                    
-                    
-                }, label: {
-                    Text("Delete")
-                        
-                }).keyboardShortcut("\u{0008}", modifiers: [])
-                Button(action: {
-                    addItem()
-                }, label: {
-                    Text("New Book")
-                        
-                }).keyboardShortcut("n", modifiers: [.command])
-
-            }
-        }
-    }
+        }    }
 
     private func addItem() {
         withAnimation {

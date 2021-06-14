@@ -12,8 +12,7 @@ struct BookList: View {
     let persistenceController = PersistenceController.shared
     
     @Environment(\.managedObjectContext) private var viewContext
-    
-    @Binding var selectedBook: Book?
+
     @State var searchText = ""
     @State var showAddBook = false
 
@@ -33,7 +32,8 @@ struct BookList: View {
                         Section(header: Text(BookState(rawValue: section.id)?.stringValue ?? "test")) {
                             ForEach(section) { book in
                                 NavigationLink {
-                                    Text(book.title ?? "Title")
+                                    BookDetailView(book: book, bookViewModel: BookViewModel(book))
+                                        .environment(\.managedObjectContext, persistenceController.container.viewContext)
                                 } label: {
                                     BookItemView(book: book)
                                 }
@@ -54,22 +54,23 @@ struct BookList: View {
 
             }.navigationTitle("Books")
                 .ignoresSafeArea()
+                .safeAreaInset(edge: .bottom) {
+                    Button(action: {
+                        showAddBook.toggle()
+                    }) {
+                        Label("Add Book", systemImage: "plus")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.bordered)
+                    .controlSize(.large)
+                    .tint(.accentColor)
+                    .padding()
+                    .background(.thinMaterial)
+                }
+
 
         }
-        .safeAreaInset(edge: .bottom) {
-            Button(action: {
-                showAddBook.toggle()
-            }) {
-                Label("Add Book", systemImage: "plus")
-                    .frame(maxWidth: .infinity)
-            }
-            .buttonStyle(.bordered)
-            .controlSize(.large)
-            .tint(.accentColor)
-            .padding()
-            .background(.thinMaterial)
-        }
-        .sheet(isPresented: $showAddBook) {
+                .sheet(isPresented: $showAddBook) {
             AddBookView(showAddBook: $showAddBook)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
@@ -107,6 +108,6 @@ struct ContentView_Previews: PreviewProvider {
         let book = Book(context: moc)
         book.title = "Title"
         book.dateCreated = Date()
-        return BookList(selectedBook: .constant(book)).preferredColorScheme(.dark).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        return BookList().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

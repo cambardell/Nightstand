@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 struct BookItemView: View {
-    var book: Book
+    @ObservedObject var book: Book
     
     var body: some View {
         HStack {
@@ -20,7 +20,7 @@ struct BookItemView: View {
                 Text(book.author ?? "Author").font(.callout)
             }
             Spacer()
-        }.padding(5)
+        }
     }
 }
 

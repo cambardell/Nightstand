@@ -11,6 +11,7 @@ import CoreData
 struct BookDetailView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.scenePhase) var scenePhase
     var book: Book
     @State var bookViewModel: BookViewModel
     
@@ -20,10 +21,6 @@ struct BookDetailView: View {
                 TextField("Title", text: $bookViewModel.title)
                     .textFieldStyle(PlainTextFieldStyle())
                     .font(.title2)
-                    .onChange(of: bookViewModel.title) { newValue in
-                        updateBookTitle(title: newValue)
-                    }
-
 
                 TextField("Author", text: $bookViewModel.author)
                     .font(.title3)
@@ -36,8 +33,7 @@ struct BookDetailView: View {
                 }
                 .pickerStyle(.automatic)
             }
-                .onChange(of: bookViewModel.author, perform: updateBookAuthor)
-                .onChange(of: bookViewModel.status, perform: updateBookStatus)
+
             
             Section(header: Text("Quotes")) {
                 if let book = book {
@@ -55,42 +51,18 @@ struct BookDetailView: View {
             .padding()
             .tint(.accentColor)
         }
-
-
-    }
-
-    private func updateBookTitle(title: String) {
-        book.title = title
-
-        do {
-            try viewContext.save()
-            print("saved")
-
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        .onChange(of: scenePhase) { _ in
+            updateBook(viewModel: bookViewModel)
+        }
+        .onDisappear {
+            updateBook(viewModel: bookViewModel)
         }
     }
 
-    private func updateBookAuthor(author: String) {
-        book.author = author
-
-        do {
-            try viewContext.save()
-            print("saved")
-
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
-    }
-
-    private func updateBookStatus(status: BookState) {
-        book.status = status.rawValue
+    private func updateBook(viewModel: BookViewModel) {
+        book.title = viewModel.title
+        book.author = viewModel.author
+        book.status = viewModel.status.rawValue
 
         do {
             try viewContext.save()

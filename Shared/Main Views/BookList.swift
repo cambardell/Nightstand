@@ -13,47 +13,18 @@ struct BookList: View {
     
     @Environment(\.managedObjectContext) private var viewContext
 
-    @State var searchText = ""
     @State var showAddBook = false
-
-    @SectionedFetchRequest<Int16, Book>(
-        sectionIdentifier: \.status,
-        sortDescriptors: [NSSortDescriptor(keyPath: \Book.dateCreated, ascending: true)],
-        animation: .default
-    )
-    private var sectionedBooks
+    @State var searchText = ""
     
     var body: some View {
 
         NavigationView {
             VStack {
-                List {
-                    ForEach(sectionedBooks) { section in
-                        Section(header: Text(BookState(rawValue: section.id)?.stringValue ?? "test")) {
-                            ForEach(section) { book in
-                                NavigationLink {
-                                    BookDetailView(book: book, bookViewModel: BookViewModel(book))
-                                        .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                                } label: {
-                                    BookItemView(book: book)
-                                }
-                                .swipeActions {
-                                    Button(role: .destructive) {
-                                        deleteItem(books: [book])
-                                    } label: {
-                                        Label("Delete", systemImage: "trash")
-                                    }
-                                }
-
-                            }
-                        }
-                    }
-                    
-                }
-                .searchable(text: $searchText)
+                ListView(filter: searchText)
+                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                    .searchable(text: $searchText)
 
             }.navigationTitle("Books")
-                .ignoresSafeArea()
                 .safeAreaInset(edge: .bottom) {
                     Button(action: {
                         showAddBook.toggle()
@@ -67,30 +38,13 @@ struct BookList: View {
                     .padding()
                     .background(.thinMaterial)
                 }
-
-
         }
-                .sheet(isPresented: $showAddBook) {
+        .sheet(isPresented: $showAddBook) {
             AddBookView(showAddBook: $showAddBook)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
 
 
-    }
-    
-    private func deleteItem(books: [Book]) {
-        withAnimation {
-            books.forEach(viewContext.delete)
-            
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
     }
 
 }
@@ -109,5 +63,63 @@ struct ContentView_Previews: PreviewProvider {
         book.title = "Title"
         book.dateCreated = Date()
         return BookList().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    }
+}
+
+struct ListView: View {
+
+    @Environment(\.managedObjectContext) private var viewContext
+    let persistenceController = PersistenceController.shared
+
+    var sectionedBooks: SectionedFetchRequest<Int16, Book>
+
+    init(filter: String) {
+        sectionedBooks = SectionedFetchRequest<Int16, Book>(
+            sectionIdentifier: \.status,
+            sortDescriptors: [NSSortDescriptor(keyPath: \Book.dateCreated, ascending: true)],
+            predicate: NSPredicate(format: "title BEGINSWITH %@", filter),
+            animation: .default
+        )
+    }
+
+    var body: some View {
+        List {
+            ForEach(sectionedBooks.wrappedValue) { section in
+                Section(header: Text(BookState(rawValue: section.id)?.stringValue ?? "test")) {
+                    ForEach(section) { book in
+                        NavigationLink {
+                            BookDetailView(book: book, bookViewModel: BookViewModel(book))
+                                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                        } label: {
+                            BookItemView(book: book)
+                        }
+                        .swipeActions {
+                            Button(role: .destructive) {
+                                deleteItem(books: [book])
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
+                        }
+
+                    }
+                }
+            }
+
+        }
+    }
+
+    private func deleteItem(books: [Book]) {
+        withAnimation {
+            books.forEach(viewContext.delete)
+
+            do {
+                try viewContext.save()
+            } catch {
+                // Replace this implementation with code to handle the error appropriately.
+                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                let nsError = error as NSError
+                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+            }
+        }
     }
 }

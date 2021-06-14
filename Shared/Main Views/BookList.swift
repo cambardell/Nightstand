@@ -77,7 +77,6 @@ struct ListView: View {
         sectionedBooks = SectionedFetchRequest<Int16, Book>(
             sectionIdentifier: \.status,
             sortDescriptors: [NSSortDescriptor(keyPath: \Book.dateCreated, ascending: true)],
-            predicate: NSPredicate(format: "title BEGINSWITH %@", filter),
             animation: .default
         )
     }

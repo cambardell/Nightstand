@@ -83,7 +83,7 @@ struct ListView: View {
             searchText = newValue
             sectionedBooks.wrappedValue.nsPredicate = newValue.isEmpty
             ? nil
-            : NSPredicate(format: "title CONTAINS %@", newValue)
+            : NSPredicate(format: "title CONTAINS %@ OR author CONTAINS %@", newValue)
         }
     }
     

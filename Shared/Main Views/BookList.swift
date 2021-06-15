@@ -12,18 +12,16 @@ struct BookList: View {
     let persistenceController = PersistenceController.shared
     
     @Environment(\.managedObjectContext) private var viewContext
-
+    
     @State var showAddBook = false
-    @State var searchText = ""
     
     var body: some View {
-
+        
         NavigationView {
             VStack {
-                ListView(filter: searchText)
+                ListView()
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                    .searchable(text: $searchText)
-
+                
             }.navigationTitle("Books")
                 .safeAreaInset(edge: .bottom) {
                     Button(action: {
@@ -43,10 +41,10 @@ struct BookList: View {
             AddBookView(showAddBook: $showAddBook)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
-
-
+        
+        
     }
-
+    
 }
 
 private let itemFormatter: DateFormatter = {
@@ -67,20 +65,29 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 struct ListView: View {
-
+    
     @Environment(\.managedObjectContext) private var viewContext
     let persistenceController = PersistenceController.shared
-
-    var sectionedBooks: SectionedFetchRequest<Int16, Book>
-
-    init(filter: String) {
-        sectionedBooks = SectionedFetchRequest<Int16, Book>(
-            sectionIdentifier: \.status,
-            sortDescriptors: [NSSortDescriptor(keyPath: \Book.dateCreated, ascending: true)],
-            animation: .default
-        )
+    
+    var sectionedBooks = SectionedFetchRequest<Int16, Book>(
+        sectionIdentifier: \.status,
+        sortDescriptors: [NSSortDescriptor(keyPath: \Book.dateCreated, ascending: true)],
+        animation: .default
+    )
+    
+    @State private var searchText = ""
+    var query: Binding<String> {
+        Binding {
+            searchText
+        } set: { newValue in
+            searchText = newValue
+            sectionedBooks.wrappedValue.nsPredicate = newValue.isEmpty
+            ? nil
+            : NSPredicate(format: "title CONTAINS %@", newValue)
+        }
     }
-
+    
+    
     var body: some View {
         List {
             ForEach(sectionedBooks.wrappedValue) { section in
@@ -99,18 +106,18 @@ struct ListView: View {
                                 Label("Delete", systemImage: "trash")
                             }
                         }
-
+                        
                     }
                 }
             }
-
-        }
+            
+        }.searchable(text: query)
     }
-
+    
     private func deleteItem(books: [Book]) {
         withAnimation {
             books.forEach(viewContext.delete)
-
+            
             do {
                 try viewContext.save()
             } catch {

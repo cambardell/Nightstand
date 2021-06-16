@@ -14,7 +14,7 @@ public class Book: NSManagedObject {
     public var quoteArray: [Quote] {
         let set = quote as? Set<Quote> ?? []
         return set.sorted {
-            $0.text ?? "1" < $1.text ?? "2"
+            $0.dateCreated ?? Date() < $1.dateCreated ?? Date()
         }
     }
 }

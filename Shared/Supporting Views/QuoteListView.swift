@@ -12,18 +12,27 @@ struct QuoteListView: View {
     
     var bookQuotes: [Quote]
     var book: Book
+    let persistenceController = PersistenceController.shared
     @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             List(bookQuotes, id: \.self) { quote in
-                Text(quote.text ?? "text")
+                QuoteItemView(quote: quote)
             }
             
         }
     }
     
 
+}
+
+struct QuoteItemView: View {
+    @ObservedObject var quote: Quote
+
+    var body: some View {
+        Text(quote.text ?? "text")
+    }
 }
 
 struct QuoteListView_Previews: PreviewProvider {

@@ -13,7 +13,7 @@ struct BookItemView: View {
     
     var body: some View {
         HStack {
-            Label("\(book.title ?? "title") by \(book.author ?? "author")", systemImage: "book")
+            Text("\(book.title ?? "title") by \(book.author ?? "author")")
                 .foregroundColor(Color(UIColor(hex: book.colorAsHex ?? "000000")))
             Spacer()
         }

@@ -18,6 +18,7 @@ struct BookDetailView: View {
     @State var showAddQuote = false
     
     var body: some View {
+        
         Form {
             Section {
                 TextField("Title", text: $bookViewModel.title)

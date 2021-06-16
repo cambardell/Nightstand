@@ -20,10 +20,9 @@ struct QuoteListView: View {
             List(bookQuotes, id: \.self) { quote in
                 QuoteItemView(quote: quote)
             }
-            
+
         }
     }
-    
 
 }
 

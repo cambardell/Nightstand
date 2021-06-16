@@ -15,8 +15,6 @@ struct AddBookView: View {
 
     @ObservedObject var bookViewModel = BookViewModel(nil)
     @Binding var showAddBook: Bool
-
-    @State private var bgColor = Color.red
     
     var body: some View {
         NavigationView {
@@ -32,7 +30,7 @@ struct AddBookView: View {
                 }
                 .pickerStyle(.automatic)
 
-                ColorPicker("Color", selection: $bgColor, supportsOpacity: false)
+                ColorPicker("Color", selection: $bookViewModel.color, supportsOpacity: false)
 
             }
             .navigationTitle("Add a new book")
@@ -47,7 +45,7 @@ struct AddBookView: View {
             .buttonStyle(.bordered)
             .controlSize(.large)
             .padding()
-            .tint(.accentColor)
+            .tint(bookViewModel.color)
         })
 
     }
@@ -60,6 +58,7 @@ struct AddBookView: View {
         book.status = bookViewModel.status.rawValue
         book.title = bookViewModel.title
         book.author = bookViewModel.author
+        book.colorAsHex = UIColor(bookViewModel.color).toHexString()
 
         do {
             try viewContext.save()

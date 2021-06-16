@@ -22,6 +22,7 @@ extension Book {
     @NSManaged public var author: String?
     @NSManaged public var status: Int16
     @NSManaged public var quote: NSSet?
+    @NSManaged public var colorAsHex: String?
 
 }
 

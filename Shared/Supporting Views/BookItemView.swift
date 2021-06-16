@@ -13,12 +13,8 @@ struct BookItemView: View {
     
     var body: some View {
         HStack {
-            RoundedRectangle(cornerRadius: 5.0).frame(width: 30)
+            Label("\(book.title ?? "title") by \(book.author ?? "author")", systemImage: "book")
                 .foregroundColor(Color(UIColor.random()))
-            VStack(alignment: .leading) {
-                Text(book.title ?? "Title")
-                Text(book.author ?? "Author").font(.callout)
-            }
             Spacer()
         }
     }

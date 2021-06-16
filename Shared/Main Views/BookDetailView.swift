@@ -21,12 +21,8 @@ struct BookDetailView: View {
         Form {
             Section {
                 TextField("Title", text: $bookViewModel.title)
-                    .textFieldStyle(PlainTextFieldStyle())
-                    .font(.title2)
 
                 TextField("Author", text: $bookViewModel.author)
-                    .font(.title3)
-                    .textFieldStyle(PlainTextFieldStyle())
 
                 Picker("Status", selection: $bookViewModel.status) {
                     ForEach(BookState.allCases, id: \.self) {
@@ -34,6 +30,8 @@ struct BookDetailView: View {
                     }
                 }
                 .pickerStyle(.automatic)
+                
+                ColorPicker("Color", selection: $bookViewModel.color, supportsOpacity: false)
             }
 
             
@@ -52,7 +50,7 @@ struct BookDetailView: View {
             .buttonStyle(.bordered)
             .controlSize(.large)
             .padding()
-            .tint(.accentColor)
+            .tint(bookViewModel.color)
         }
         .sheet(isPresented: $showAddQuote) {
             AddQuoteView(book: book, showAddQuoteView: $showAddQuote)
@@ -74,6 +72,7 @@ struct BookDetailView: View {
         book.title = viewModel.title
         book.author = viewModel.author
         book.status = viewModel.status.rawValue
+        book.colorAsHex = UIColor(viewModel.color).toHexString()
 
         do {
             try viewContext.save()

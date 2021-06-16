@@ -12,13 +12,14 @@ import SwiftUI
 
 class BookViewModel: ObservableObject, Equatable {
     static func == (lhs: BookViewModel, rhs: BookViewModel) -> Bool {
-        return (lhs.id == rhs.id) && (lhs.title == rhs.title) && (lhs.author == rhs.author) && (lhs.status == rhs.status)
+        return (lhs.id == rhs.id) && (lhs.title == rhs.title) && (lhs.author == rhs.author) && (lhs.status == rhs.status) && (lhs.color == rhs.color)
     }
 
     @Published var title = ""
     @Published var author = ""
     @Published var status: BookState = .wishlist
     @Published var id = UUID()
+    @Published var color: Color = Color.accentColor
     @Published var dateCreated = Date()
 
     init(_ book: Book?) {
@@ -28,6 +29,7 @@ class BookViewModel: ObservableObject, Equatable {
             status = BookState(rawValue: book.status) ?? .wishlist
             id = book.id
             dateCreated = book.dateCreated ?? Date()
+            color = Color(UIColor(hex: book.colorAsHex ?? "000000"))
         }
 
     }

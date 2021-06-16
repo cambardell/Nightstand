@@ -60,8 +60,8 @@
 
 /* Begin PBXFileReference section */
 		FC09D6D0259E6ED900B2347B /* BookState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookState.swift; sourceTree = "<group>"; };
-		FC09D6E9259E71FA00B2347B /* Book+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Book+CoreDataClass.swift"; path = "Shared/Model/Book+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		FC09D6EA259E71FA00B2347B /* Book+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Book+CoreDataProperties.swift"; path = "Shared/Model/Book+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		FC09D6E9259E71FA00B2347B /* Book+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Book+CoreDataClass.swift"; path = "Shared/Persistence/Book+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		FC09D6EA259E71FA00B2347B /* Book+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Book+CoreDataProperties.swift"; path = "Shared/Persistence/Book+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		FC09D6F3259FB56200B2347B /* QuoteListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteListView.swift; sourceTree = "<group>"; };
 		FC217B0F2598682600C604EE /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		FC217B102598682600C604EE /* Footnote_App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Footnote_App.swift; sourceTree = "<group>"; };
@@ -142,12 +142,7 @@
 		FC09D700259FB61E00B2347B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				FC09D6E9259E71FA00B2347B /* Book+CoreDataClass.swift */,
-				FC09D6EA259E71FA00B2347B /* Book+CoreDataProperties.swift */,
-				FC217B122598682600C604EE /* Persistence.swift */,
-				FC35022825996388008D1516 /* FootnoteCommands.swift */,
 				FC09D6D0259E6ED900B2347B /* BookState.swift */,
-				FC9C1CAF259D92A700FF5CB1 /* Cosmetics.swift */,
 				FCD8324E2675C81900C903A0 /* BookViewModel.swift */,
 			);
 			path = Model;
@@ -168,6 +163,8 @@
 		FC217B0D2598682600C604EE /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				FC8B1A54267AA6610056A4F9 /* Helpers */,
+				FC8B1A55267AA6730056A4F9 /* Persistence */,
 				FC09D700259FB61E00B2347B /* Model */,
 				FC09D6FE259FB5F400B2347B /* Main Views */,
 				FC09D6FF259FB60700B2347B /* Supporting Views */,
@@ -221,6 +218,25 @@
 				FC217B392598682800C604EE /* Info.plist */,
 			);
 			path = "Tests macOS";
+			sourceTree = "<group>";
+		};
+		FC8B1A54267AA6610056A4F9 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				FC9C1CAF259D92A700FF5CB1 /* Cosmetics.swift */,
+				FC35022825996388008D1516 /* FootnoteCommands.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		FC8B1A55267AA6730056A4F9 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				FC09D6E9259E71FA00B2347B /* Book+CoreDataClass.swift */,
+				FC09D6EA259E71FA00B2347B /* Book+CoreDataProperties.swift */,
+				FC217B122598682600C604EE /* Persistence.swift */,
+			);
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

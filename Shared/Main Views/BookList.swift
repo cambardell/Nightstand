@@ -55,11 +55,7 @@ private let itemFormatter: DateFormatter = {
 }()
 
 struct ContentView_Previews: PreviewProvider {
-    static let moc = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
     static var previews: some View {
-        let book = Book(context: moc)
-        book.title = "Title"
-        book.dateCreated = Date()
         return BookList().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
@@ -69,11 +65,11 @@ struct ListView: View {
     @Environment(\.managedObjectContext) private var viewContext
     let persistenceController = PersistenceController.shared
     
-    var sectionedBooks = SectionedFetchRequest<Int16, Book>(
+    @SectionedFetchRequest<Int16, Book>(
         sectionIdentifier: \.status,
-        sortDescriptors: [NSSortDescriptor(keyPath: \Book.dateCreated, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Book.status, ascending: true)],
         animation: .default
-    )
+    ) var sectionedBooks: SectionedFetchResults<Int16, Book>
     
     @State private var searchText = ""
     var query: Binding<String> {
@@ -81,7 +77,7 @@ struct ListView: View {
             searchText
         } set: { newValue in
             searchText = newValue
-            sectionedBooks.wrappedValue.nsPredicate = newValue.isEmpty
+            sectionedBooks.nsPredicate = newValue.isEmpty
             ? nil
             : NSPredicate(format: "title CONTAINS %@ OR author CONTAINS %@", newValue, newValue)
         }
@@ -90,8 +86,8 @@ struct ListView: View {
     
     var body: some View {
         List {
-            ForEach(sectionedBooks.wrappedValue) { section in
-                Section(header: Text(BookState(rawValue: section.id)?.stringValue ?? "test")) {
+            ForEach(sectionedBooks) { section in
+                Section(header: Text(BookState(rawValue: section.id)?.stringValue ?? "Wishlist")) {
                     ForEach(section) { book in
                         NavigationLink {
                             BookDetailView(book: book, bookViewModel: BookViewModel(book))
@@ -112,6 +108,7 @@ struct ListView: View {
             }
             
         }.searchable(text: query)
+
     }
     
     private func deleteItem(books: [Book]) {

@@ -19,7 +19,7 @@ struct QuoteListView: View {
         VStack(alignment: .leading) {
             List(bookQuotes, id: \.self) { quote in
                 QuoteItemView(quote: quote)
-            }
+            }.listStyle(.automatic)
 
         }
     }

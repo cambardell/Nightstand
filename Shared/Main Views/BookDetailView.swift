@@ -13,6 +13,7 @@ struct BookDetailView: View {
     let persistenceController = PersistenceController.shared
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.scenePhase) var scenePhase
+
     @ObservedObject var book: Book
     @State var bookViewModel: BookViewModel
     @State var showAddQuote = false
@@ -54,7 +55,7 @@ struct BookDetailView: View {
             .tint(bookViewModel.color)
         }
         .sheet(isPresented: $showAddQuote) {
-            AddQuoteView(book: book, showAddQuoteView: $showAddQuote)
+            AddQuoteView(book: book, showAddQuoteView: $showAddQuote, existingQuote: nil)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
         .onChange(of: scenePhase) { _ in

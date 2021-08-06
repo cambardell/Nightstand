@@ -16,20 +16,26 @@ struct AddQuoteView: View {
     @ObservedObject var quoteViewModel: QuoteViewModel
     var showAddQuote: Binding<Bool>
 
-    init(book: Book, showAddQuoteView: Binding<Bool>) {
-        quoteViewModel = QuoteViewModel(quote: nil, ownerBook: book)
+    var existingQuote: Quote?
+
+    init(book: Book, showAddQuoteView: Binding<Bool>, existingQuote: Quote?) {
+        if let givenQuote = existingQuote {
+            quoteViewModel = QuoteViewModel(quote: givenQuote, ownerBook: book)
+            self.existingQuote = existingQuote
+        } else {
+            quoteViewModel = QuoteViewModel(quote: nil, ownerBook: book)
+        }
+
         showAddQuote = showAddQuoteView
     }
 
     var body: some View {
         NavigationView {
-
             Form {
-                TextField("Title", text: $quoteViewModel.text)
+                TextEditor(text: $quoteViewModel.text)
 
             }
             .navigationTitle("Add a new quote")
-
 
         }
         .safeAreaInset(edge: .bottom, content: {
@@ -45,12 +51,19 @@ struct AddQuoteView: View {
     }
 
     func saveQuote() {
-        let quote = Quote(context: persistenceController.container.viewContext)
+        if let quote = existingQuote {
+            quote.dateCreated = quoteViewModel.dateCreated
+            quote.text = quoteViewModel.text
+            quote.book = quoteViewModel.book
+        } else {
+            let quote = Quote(context: persistenceController.container.viewContext)
 
-        quote.dateCreated = quoteViewModel.dateCreated
-        quote.text = quoteViewModel.text
-        quote.book = quoteViewModel.book
-        quoteViewModel.book.addToQuote(quote)
+            quote.dateCreated = quoteViewModel.dateCreated
+            quote.text = quoteViewModel.text
+            quote.book = quoteViewModel.book
+            quoteViewModel.book.addToQuote(quote)
+        }
+
 
         do {
             try viewContext.save()
@@ -71,7 +84,7 @@ struct AddQuoteView_Previews: PreviewProvider {
         quote.text = "Text"
         quote.dateCreated = Date()
         return Group {
-            AddQuoteView(book: book, showAddQuoteView: .constant(true))
+            AddQuoteView(book: book, showAddQuoteView: .constant(true), existingQuote: nil)
                 .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
         }
     }

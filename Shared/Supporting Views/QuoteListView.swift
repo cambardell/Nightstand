@@ -18,19 +18,42 @@ struct QuoteListView: View {
     var body: some View {
         VStack(alignment: .leading) {
             List(bookQuotes, id: \.self) { quote in
-                QuoteItemView(quote: quote)
+                QuoteItemView(book: book, quote: quote, quoteViewModel: QuoteViewModel(quote: quote, ownerBook: book))
+
             }.listStyle(.automatic)
 
         }
+
     }
 
 }
 
 struct QuoteItemView: View {
+    let persistenceController = PersistenceController.shared
+    @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.scenePhase) var scenePhase
+
+    var book: Book
     @ObservedObject var quote: Quote
+    @State var quoteViewModel: QuoteViewModel
+    @State var showAddQuote = false
 
     var body: some View {
-        Text(quote.text ?? "text")
+        HStack {
+            VStack(alignment: .leading) {
+                Text(quoteViewModel.text)
+                Divider()
+            }
+            Spacer()
+        }
+        .onTapGesture {
+            showAddQuote.toggle()
+        }
+        .sheet(isPresented: $showAddQuote, onDismiss: {
+
+        }) {
+            AddQuoteView(book: book, showAddQuoteView: $showAddQuote, existingQuote: quote)
+        }
     }
 }
 
